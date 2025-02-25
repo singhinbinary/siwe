@@ -1,5 +1,5 @@
-import { createPublicClient, http } from 'viem';
-import { luksoTestnet } from 'viem/chains';
+import { createPublicClient, http } from "viem";
+import { luksoTestnet } from "viem/chains";
 
 export default async function handler(request, res) {
   const { siweMessage, signature } = request.body;
@@ -8,9 +8,10 @@ export default async function handler(request, res) {
     transport: http(),
   });
 
-  const isValid = await publicClient.verifySiweMessage({
+  const isValidSignature = await publicClient.verifySiweMessage({
     message: siweMessage,
     signature,
   });
-  res.status(200).json({ isValidSignature: true });
+
+  res.status(200).json({ isValidSignature });
 }
