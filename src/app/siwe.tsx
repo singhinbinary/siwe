@@ -1,6 +1,12 @@
 "use client";
 import { useReducer } from "react";
 
+declare global {
+  interface Window {
+    lukso?: any;
+  }
+}
+
 import { Address, createWalletClient, custom } from "viem";
 import { createSiweMessage, generateSiweNonce } from "viem/siwe";
 import { formatRequest, initialState, reducer } from "./utils";
@@ -9,7 +15,7 @@ import { BASE_URL } from "../../globals";
 const transport = window?.lukso ? custom(window.lukso) : undefined;
 
 if (!transport) {
-  console.error("Lukso wallet is not available.");
+  console.error("LUKSO wallet is not available.");
 }
 
 const walletClient = createWalletClient({
