@@ -58,9 +58,15 @@ const SiweLogin = () => {
     const responseJson = await response.json();
 
     dispatch({
+      type: "SET_ERROR",
+      payload: responseJson.error,
+    });
+
+    dispatch({
       type: "SET_VALID_SIGNATURE",
       payload: responseJson.isValidSignature ?? false,
     });
+
     dispatch({ type: "SET_LOADING", payload: false });
   };
 
@@ -78,7 +84,6 @@ const SiweLogin = () => {
             <p className="mt-3 text-3xl font-semibold leading-normal">
               Login with SIWE
             </p>
-
             <div className={"mt-8 inline-flex items-center gap-3"}>
               <button
                 color="primary"
@@ -89,31 +94,34 @@ const SiweLogin = () => {
                 Sign message with my crypto key
               </button>
             </div>
-
             {state.siweMessage && (
               <div>
                 <p className="mt-8 max-w-[500px]">SIWE message:</p>
                 <p className="mt-1 max-w-[500px]">{state.siweMessage}</p>
               </div>
             )}
-
             {state.signature && (
               <p className="mt-8 max-w-[500px]">Signature: {state.signature}</p>
             )}
-
             {state.isLoading && (
               <p className="mt-8 max-w-[500px]">
                 ⏳ Verifying your signature ...{" "}
               </p>
             )}
-
             {state.isValidSignature ? (
               <p className="mt-8 max-w-[500px]">Your signature is valid 👏</p>
             ) : (
               state.signature &&
-              !state.isLoading && (
+              !state.isLoading &&
+              !state.error && (
                 <p className="mt-8 max-w-[500px]">😥 Invalid signature</p>
               )
+            )}
+
+            {state.error && (
+              <p className="mt-8 max-w-[500px]">
+                ❌ An error occured verifying your signature
+              </p>
             )}
           </div>
 

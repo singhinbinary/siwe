@@ -21,6 +21,7 @@ export const initialState = {
   isValidSignature: false,
   siweMessage: "",
   walletClient: undefined,
+  error: "",
 };
 
 export function reducer(state: State, action: Action): State {
@@ -35,6 +36,8 @@ export function reducer(state: State, action: Action): State {
       return { ...state, siweMessage: action.payload };
     case "SET_WALLET_CLIENT":
       return { ...state, walletClient: action.payload };
+    case "SET_ERROR":
+      return { ...state, error: action.payload };
     default:
       return state;
   }

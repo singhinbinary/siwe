@@ -6,6 +6,7 @@ export interface State {
   isValidSignature: boolean;
   siweMessage: string;
   walletClient: WalletClient | undefined;
+  error: string;
 }
 
 export interface Action {
@@ -14,6 +15,8 @@ export interface Action {
     | "SET_LOADING"
     | "SET_VALID_SIGNATURE"
     | "SET_SIWE_MESSAGE"
-    | "SET_WALLET_CLIENT";
+    | "SET_WALLET_CLIENT"
+    | "SET_ERROR";
+
   payload: any;
 }
