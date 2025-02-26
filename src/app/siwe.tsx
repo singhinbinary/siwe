@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 "use client";
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 
 declare global {
   interface Window {
@@ -12,23 +14,23 @@ import { createSiweMessage, generateSiweNonce } from "viem/siwe";
 import { formatRequest, initialState, reducer } from "./utils";
 import { BASE_URL } from "../../globals";
 
-const transport = window?.lukso ? custom(window.lukso) : undefined;
-
-if (!transport) {
-  console.error("LUKSO wallet is not available.");
-}
-
-const walletClient = createWalletClient({
-  transport: transport!,
-});
-
 const SiweLogin = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.lukso) {
+      dispatch({
+        type: "SET_WALLET_CLIENT",
+        payload: createWalletClient({ transport: custom(window.lukso) }),
+      });
+    }
+  }, []);
+
   const handleSiweLogin = async () => {
-    const [account] = await walletClient.getAddresses();
-    const chainId = await walletClient.getChainId();
-    console.log(chainId);
+    if (!state.walletClient) return;
+
+    const [account] = await state.walletClient.getAddresses();
+    const chainId = await state.walletClient.getChainId();
 
     const siweMessage = createSiweMessage({
       domain: window.location.host,
@@ -38,12 +40,13 @@ const SiweLogin = () => {
       chainId,
       nonce: generateSiweNonce(),
       issuedAt: new Date(),
-      // expirationTime: new Date(),
+      // expirationTime: new Date(), //Other properties that could be set to verify the validity of the message
       // notBefore: new Date(),
     });
+
     dispatch({ type: "SET_SIWE_MESSAGE", payload: siweMessage });
 
-    const signature = await walletClient.signMessage({
+    const signature = await state.walletClient.signMessage({
       account,
       message: siweMessage,
     });
