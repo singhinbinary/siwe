@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { WalletClient } from "viem";
 
 export interface State {
