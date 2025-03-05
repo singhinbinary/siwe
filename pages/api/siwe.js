@@ -1,11 +1,11 @@
 import { createPublicClient, http } from "viem";
-import { luksoTestnet } from "viem/chains";
+import { lukso } from "viem/chains";
 
 export default async function handler(request, res) {
   const { siweMessage, signature } = request.body;
 
   const publicClient = createPublicClient({
-    chain: luksoTestnet,
+    chain: lukso,
     transport: http(),
   });
 
