@@ -136,6 +136,8 @@ const SiweLogin = () => {
           </div>
         )}
 
+        {state.isLoading && <p>⏳ Loading...</p>}
+
         {state.isValidSignature ? (
           <p className="mt-8 max-w-[500px]">✅ Your signature is valid 👏</p>
         ) : (
