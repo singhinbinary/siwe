@@ -33,7 +33,7 @@ const SiweLogin = () => {
   const handleSiweLogin = async () => {
     if (!state.walletClient) return;
 
-    const [account] = await state.walletClient.getAddresses();
+    const [account] = await state.walletClient.requestAddresses();
     const chainId = await state.walletClient.getChainId();
 
     const siweMessage = createSiweMessage({
