@@ -11,6 +11,7 @@ import { Address, createWalletClient, custom } from "viem";
 import { createSiweMessage, generateSiweNonce } from "viem/siwe";
 import { formatRequest, initialState, reducer } from "./utils";
 import { BASE_URL } from "../../globals";
+import { luksoTestnet } from "viem/chains";
 
 const SiweLogin = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -19,7 +20,10 @@ const SiweLogin = () => {
     if (typeof window !== "undefined" && window.lukso) {
       dispatch({
         type: "SET_WALLET_CLIENT",
-        payload: createWalletClient({ transport: custom(window.lukso) }),
+        payload: createWalletClient({
+          chain: luksoTestnet,
+          transport: custom(window.lukso!),
+        }),
       });
     }
   }, []);
@@ -28,6 +32,7 @@ const SiweLogin = () => {
     if (!state.walletClient) return;
 
     const [account] = await state.walletClient.getAddresses();
+
     const chainId = await state.walletClient.getChainId();
 
     const siweMessage = createSiweMessage({
