@@ -17,6 +17,6 @@ export default async function handler(request, res) {
     res.status(200).json({ isValidSignature });
   } catch (error) {
     console.log("❌ Error", error);
-    res.status(500).json({ error });
+    res.status(500).json({ error: error.message });
   }
 }
