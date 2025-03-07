@@ -1,4 +1,25 @@
-import { Action, State } from "./interface";
+import { WalletClient } from "viem";
+
+interface State {
+  signature: string;
+  isLoading: boolean;
+  isValidSignature: boolean;
+  siweMessage: string;
+  walletClient: WalletClient | undefined;
+  error: string;
+}
+
+interface Action {
+  type:
+    | "SET_SIGNATURE"
+    | "SET_LOADING"
+    | "SET_VALID_SIGNATURE"
+    | "SET_SIWE_MESSAGE"
+    | "SET_WALLET_CLIENT"
+    | "SET_ERROR";
+
+  payload: any;
+}
 
 export function formatRequest(method: string, data?: unknown) {
   const headers = {

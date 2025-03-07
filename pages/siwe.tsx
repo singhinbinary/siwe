@@ -9,11 +9,11 @@ declare global {
 
 import { Address, createWalletClient, custom } from "viem";
 import { createSiweMessage, generateSiweNonce } from "viem/siwe";
-import { formatRequest, initialState, reducer } from "./utils";
-import { BASE_URL } from "../../globals";
+import { BASE_URL } from "../constants";
 import { lukso } from "viem/chains";
 import Image from "next/image";
 import { Loader2 } from "lucide-react";
+import { formatRequest, initialState, reducer } from "../utils";
 
 const SiweLogin = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
