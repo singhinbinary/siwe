@@ -1,10 +1,11 @@
 ## SIWE Login dApp
 
-### Previous installation
+### Prerequisites
 
-Install [LUKSO Browser extension](https://chromewebstore.google.com/detail/universal-profiles/abpickdkkbnbcoepogfhkhennhfhehfn?hl=en-GB&utm_source=ext_sidebar)
+Before running the project, ensure you have:
 
-Create a [Universal Profile](https://my.universalprofile.cloud/) on LUKSO Mainnet.
+[LUKSO Browser Extension](https://chromewebstore.google.com/detail/universal-profiles/abpickdkkbnbcoepogfhkhennhfhehfn?hl=en-GB&utm_source=ext_sidebar) installed.
+A [Universal Profile](https://my.universalprofile.cloud/) created on LUKSO Mainnet
 
 ### Run locally
 
