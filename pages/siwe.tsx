@@ -11,9 +11,9 @@ import { Address, createWalletClient, custom } from "viem";
 import { createSiweMessage, generateSiweNonce } from "viem/siwe";
 import { BASE_URL } from "../constants";
 import { lukso } from "viem/chains";
-import Image from "next/image";
 import { Loader2 } from "lucide-react";
 import { formatRequest, initialState, reducer } from "../utils";
+import Link from "next/link";
 
 const SiweLogin = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -90,16 +90,41 @@ const SiweLogin = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
       <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-lg text-center">
-        <Image
-          src="/LUKSO.svg"
-          alt="LUKSO Logo"
-          width={50}
-          height={50}
-          className="mx-auto"
-        />
         <h1 className="text-2xl font-bold mt-4">Login with SIWE</h1>
-        <p className="text-gray-600 mt-2">
-          LUKSO Mainnet - Sign in securely using your Universal Profile.
+
+        <p className="text-lg font-semibold mt-4">
+          <a
+            href="https://example.com/siwe-article"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 underline"
+          >
+            Read the article on SIWE
+          </a>
+        </p>
+        <p>Prerequisites: Ensure you have</p>
+        <p>
+          1. LUKSO{" "}
+          <Link
+            href="https://chromewebstore.google.com/detail/universal-profiles/abpickdkkbnbcoepogfhkhennhfhehfn?hl=en-GB&utm_source=ext_sidebar"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Browser Extension{" "}
+          </Link>
+          installed
+        </p>
+
+        <p>
+          2. A{" "}
+          <Link
+            href="https://my.universalprofile.cloud/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Universal Profile{" "}
+          </Link>
+          deployed on LUKSO Mainnet
         </p>
         <button
           onClick={handleSiweLogin}
@@ -112,13 +137,13 @@ const SiweLogin = () => {
               Verifying...
             </span>
           ) : (
-            "Sign message"
+            "Login"
           )}
         </button>
         {state.siweMessage && (
           <div>
             <p className="text-sm mt-4 break-words">
-              📜 <b>Message</b>
+              📜 <b> Sign this Message</b>
             </p>
             <div className="bg-gray-100 border border-gray-300 p-4 rounded-md text-sm mt-2">
               <pre className="whitespace-pre-wrap">{state.siweMessage}</pre>
@@ -128,7 +153,7 @@ const SiweLogin = () => {
         {state.signature && (
           <div>
             <p className="text-sm mt-4 break-words">
-              ✍️ <b>Signature</b>
+              ✍️ <b> Your Signature</b>
             </p>
             <div className="bg-gray-100 border border-gray-300 p-4 rounded-md text-sm mt-2">
               <pre className="whitespace-pre-wrap">{state.signature}</pre>
@@ -136,15 +161,20 @@ const SiweLogin = () => {
           </div>
         )}
 
-        {state.isLoading && <p>⏳ Loading...</p>}
+        {state.isLoading && <p>⏳ Verifying signature...</p>}
 
         {state.isValidSignature ? (
-          <p className="mt-8 max-w-[500px]">✅ Your signature is valid 👏</p>
+          <p className="mt-8 max-w-[500px]">
+            ✅ Your signature is valid 👏 You have been logged in
+          </p>
         ) : (
           state.signature &&
           !state.isLoading &&
           !state.error && (
-            <p className="mt-8 max-w-[500px]">😥 Invalid signature.</p>
+            <p className="mt-8 max-w-[500px]">
+              😥 Invalid signature. Make sure you are login in with a Universal
+              Profile deployed on LUKSO Mainnet.
+            </p>
           )
         )}
 
